@@ -37,7 +37,6 @@ layer before it.
 └── narrator/
     ├── findings.json
     ├── generate_narrative.py
-    └── sample_output.txt
 ```
 
 ## Requirements
@@ -133,7 +132,7 @@ paid-only key):
 
 ```bash
 export GEMINI_API_KEY="your-free-api-key"     # Linux / macOS
-# setx GEMINI_API_KEY "your-free-api-key"     # Windows (new shell after)
+setx GEMINI_API_KEY "your-free-api-key"       # Windows (new shell after)
 python narrator/generate_narrative.py
 ```
 
