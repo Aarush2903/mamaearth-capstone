@@ -36,7 +36,7 @@ layer before it.
 │   └── monthly_revenue_trend.png
 └── narrator/
     ├── findings.json
-    ├── generate_narrative.py
+    └── generate_narrative.py
 ```
 
 ## Requirements
