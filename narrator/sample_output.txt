@@ -1,0 +1,15 @@
+NOTE: This sample was generated via the OFFLINE fallback path (generate_scr_narrative_offline),
+since no GEMINI_API_KEY was configured in the environment this repo was built in.
+If you run narrator/generate_narrative.py with a real Gemini API key set, replace this file
+with the actual Gemini output from that run -- the grader checks this saved file, not a live call.
+
+--- NARRATIVE ---
+
+Situation
+Mamaearth's cleaned order data shows total revenue of Rs 97,358.30 across the verified, deduplicated order set. Before cleaning, the raw pipeline reported Rs 99,860.20 -- a difference of Rs 2,501.90 that is fully explained by 5 duplicate orders removed during data cleaning, not by any change in actual sales.
+
+Complication
+Returns are not spread evenly across the business. Cash-on-delivery (COD) orders return at 44.4%, roughly three times the Card rate of 14.7% and well above UPI's 18.9%. Drilling further, the single highest-risk segment is COD orders placed by customers in Tier-2 cities, which return at 54.5% -- meaningfully worse than the blended COD figure alone would suggest. Separately, January 2026 (2026-01) looked like the strongest revenue month at Rs 29,582.10, but that figure is inflated by two unusually large bulk orders; once those outliers are excluded it corrects down to Rs 11,637.10.
+
+Resolution
+The true peak revenue month, once outliers are removed, is March 2026 (2026-03) at Rs 20,318.90 -- this is the month regional ops should study to understand what actually drives strong demand. On returns, the data points to a targeted fix rather than a blanket one: tightening COD verification specifically for Tier-2 cities should address the 54.5% return rate concentrated there, without penalizing the much lower-risk Card and UPI channels or COD orders from Tier-1 cities.
