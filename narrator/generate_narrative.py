@@ -37,6 +37,10 @@ def load_findings() -> dict:
 # ------------------------------------------------------------------
 # Task 2 -- online narrative via google-genai
 # ------------------------------------------------------------------
+# Model names get retired over time; override without editing code via:
+#   set GEMINI_MODEL=<model-name>   (Windows)   /   export GEMINI_MODEL=<model-name>
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
+
 SYSTEM_INSTRUCTION = (
     "You are a senior data analyst writing for Mamaearth's regional ops and "
     "finance heads. Write a concise business narrative structured into exactly "
@@ -101,7 +105,7 @@ def generate_scr_narrative(findings: dict) -> dict:
         client = genai.Client(api_key=api_key)
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model=os.environ.get("GEMINI_MODEL", DEFAULT_MODEL),
             contents=_build_user_prompt(findings),
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_INSTRUCTION,
@@ -109,11 +113,15 @@ def generate_scr_narrative(findings: dict) -> dict:
                                            # report, not creative writing, so we want the
                                            # same verified numbers phrased the same way
                                            # on every run, not sampled variation
-                max_output_tokens=500,    # >= 300, enough for a ~250-word 3-section narrative
+                max_output_tokens=4096,   # >= 300. Generous because newer Gemini models count internal
+                                           # "thinking" tokens against this limit; 500 truncated the reply
                 http_options=types.HttpOptions(timeout=15_000),  # 15s, >= taught 10s minimum
             ),
         )
 
+        finish = str(getattr(response.candidates[0], "finish_reason", "")) if response.candidates else ""
+        if "MAX_TOKENS" in finish:
+            raise RuntimeError("Gemini reply was truncated (hit max_output_tokens)")
         text = response.text
         tokens = getattr(getattr(response, "usage_metadata", None), "total_token_count", None)
 

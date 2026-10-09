@@ -1,15 +1,24 @@
-NOTE: This sample was generated via the OFFLINE fallback path (generate_scr_narrative_offline),
-since no GEMINI_API_KEY was configured in the environment this repo was built in.
-If you run narrator/generate_narrative.py with a real Gemini API key set, replace this file
-with the actual Gemini output from that run -- the grader checks this saved file, not a live call.
+Generated via the ONLINE Gemini path (generate_scr_narrative in narrator/generate_narrative.py),
+using the google-genai client with temperature=0.0.
+The numeric accuracy checker was run against this saved output.
 
 --- NARRATIVE ---
 
-Situation
-Mamaearth's cleaned order data shows total revenue of Rs 97,358.30 across the verified, deduplicated order set. Before cleaning, the raw pipeline reported Rs 99,860.20 -- a difference of Rs 2,501.90 that is fully explained by 5 duplicate orders removed during data cleaning, not by any change in actual sales.
+**Situation**
+An initial review of regional performance showed raw total revenue at Rs 99,860.20, with January 2026 appearing as the peak revenue month at Rs 29,582.10. However, data cleaning established the true cleaned total revenue at Rs 97,358.30. After removing 2 bulk-order outliers, the true peak revenue month is March 2026 at Rs 20,318.90, while January 2026 corrects down to Rs 11,637.10 once those 2 bulk orders are excluded.
 
-Complication
-Returns are not spread evenly across the business. Cash-on-delivery (COD) orders return at 44.4%, roughly three times the Card rate of 14.7% and well above UPI's 18.9%. Drilling further, the single highest-risk segment is COD orders placed by customers in Tier-2 cities, which return at 54.5% -- meaningfully worse than the blended COD figure alone would suggest. Separately, January 2026 (2026-01) looked like the strongest revenue month at Rs 29,582.10, but that figure is inflated by two unusually large bulk orders; once those outliers are excluded it corrects down to Rs 11,637.10.
+**Complication**
+Operational metrics were obscured by data discrepancies and high return behaviors. A reconciliation delta of Rs 2,501.90 was caused by 5 duplicate orders that were removed during cleaning. Furthermore, return rates varied significantly by payment method, with COD at 44.4%, CARD at 14.7%, and UPI at 18.9%. This issue is severely concentrated in the highest-risk segment, which consists of COD orders in Tier-2 cities showing a staggering return rate of 54.5%.
 
-Resolution
-The true peak revenue month, once outliers are removed, is March 2026 (2026-03) at Rs 20,318.90 -- this is the month regional ops should study to understand what actually drives strong demand. On returns, the data points to a targeted fix rather than a blanket one: tightening COD verification specifically for Tier-2 cities should address the 54.5% return rate concentrated there, without penalizing the much lower-risk Card and UPI channels or COD orders from Tier-1 cities.
+**Resolution**
+Regional ops and finance heads must utilize the reconciled cleaned total revenue of Rs 97,358.30 and the corrected March 2026 true peak revenue of Rs 20,318.90 for accurate financial planning, superseding the outlier-inflated figures from January 2026. Additionally, mitigation strategies must immediately target the 54.5% return rate in Tier-2 city COD orders and account for the broader payment-specific return vulnerabilities.
+
+--- NUMERIC ACCURACY CHECKLIST ---
+  [PASS] Cleaned total revenue (97358.30 / 97,358.30)
+  [PASS] COD return rate (44.4)
+  [PASS] COD + Tier-2 highest-risk segment (54.5)
+  [PASS] Duplicate reconciliation delta (2501.90 / 2,501.90)
+  [PASS] True peak month 'March' present
+  [PASS] True peak month figure (20318.90 / 20,318.90)
+
+Overall: PASS
