@@ -8,7 +8,7 @@
 
 
 -- ------------------------------------------------------------
--- (a) Order totals -- 2 marks
+-- (a) Order totals
 -- revenue per row = quantity * price * (1 - discount_pct/100),
 -- NULL discount treated as 0% via COALESCE.
 --
@@ -25,7 +25,7 @@ JOIN products p ON o.product_id = p.product_id;
 
 
 -- ------------------------------------------------------------
--- (b) COUNT(*) vs COUNT(column) -- 2 marks
+-- (b) COUNT(*) vs COUNT(column)
 -- Shows how many orders are missing a rating.
 --
 -- Output:
@@ -40,7 +40,7 @@ FROM orders;
 
 
 -- ------------------------------------------------------------
--- (c) LEFT JOIN zero-match row, confirmed independently -- 3 marks
+-- (c) LEFT JOIN zero-match row, confirmed independently
 -- Finds the one customer with no orders at all.
 --
 -- Query 1 (LEFT JOIN) output:
@@ -68,7 +68,7 @@ WHERE customer_id NOT IN (SELECT DISTINCT customer_id FROM orders);
 
 
 -- ------------------------------------------------------------
--- (d) GROUP BY + HAVING -- return rate by city, > 20% -- 3 marks
+-- (d) GROUP BY + HAVING -- return rate by city, > 20%
 --
 -- Output (exactly 3 rows, ordered by return_rate_pct DESC):
 -- city      | total_orders | returned_orders | return_rate_pct
@@ -90,7 +90,7 @@ ORDER BY return_rate_pct DESC;
 
 
 -- ------------------------------------------------------------
--- (e) Ranking with ORDER BY + LIMIT/OFFSET -- 3 marks
+-- (e) Ranking with ORDER BY + LIMIT/OFFSET
 -- Tie-break on customer_id ASC: two customers could tie on
 -- total_spend, and without a secondary key ties would be
 -- ordered arbitrarily by the engine, making the ranking
@@ -136,7 +136,7 @@ LIMIT 3 OFFSET 2;
 
 
 -- ------------------------------------------------------------
--- (f) Three-table JOIN with GROUP BY -- revenue by category -- 3 marks
+-- (f) Three-table JOIN with GROUP BY -- revenue by category
 -- orders + products + customers joined (customers isn't
 -- strictly needed for this aggregation, but included to
 -- confirm the three-way join compiles cleanly, since Part 3
@@ -161,7 +161,7 @@ ORDER BY category_revenue DESC;
 
 
 -- ------------------------------------------------------------
--- (g) LIKE pattern match -- names starting with 'A' -- 2 marks
+-- (g) LIKE pattern match -- names starting with 'A'
 --
 -- Output:
 -- count
@@ -173,7 +173,7 @@ WHERE name LIKE 'A%';
 
 
 -- ------------------------------------------------------------
--- (h) DISTINCT acquisition sources -- 1 mark
+-- (h) DISTINCT acquisition sources
 --
 -- Output (4 distinct values):
 -- Organic, Referral, Ad, Social
@@ -183,7 +183,7 @@ FROM customers;
 
 
 -- ------------------------------------------------------------
--- (i) ALTER TABLE + UPDATE with CASE -- 1 mark
+-- (i) ALTER TABLE + UPDATE with CASE
 -- Every customer gets a loyalty_tier: Tier-1 city -> Gold,
 -- everyone else -> Silver. No WHERE clause -- all rows updated.
 -- ------------------------------------------------------------
